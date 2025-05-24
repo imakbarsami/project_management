@@ -6,6 +6,7 @@ use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
+use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 
 class ProjectController extends Controller
@@ -17,11 +18,24 @@ class ProjectController extends Controller
     {
 
         $query=Project::query();
-        $projects=$query->paginate(10)->onEachSide(1);
+
+        $sort_field=request('sort_field', 'created_at');
+        $sort_direction=request('sort_direction', 'desc');
+
+        if(request('name')){
+            $query->where('name', 'like', '%' . request('name') . '%');
+        }
+
+        if(request('status')){
+            $query->where('status', 'like', '%' . request('status') . '%');
+        }
+
+        $projects=$query->orderBy($sort_field,$sort_direction)->paginate(10)->onEachSide(1);
 
         return Inertia::render('Project/Index',[
 
             'projects'=>ProjectResource::collection($projects),
+            'queryPrams'=>request()->query()?:null
         ]);
     }
 
