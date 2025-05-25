@@ -9,8 +9,6 @@ import TableHeader from "@/Components/TableHeader";
 
 export default function Index({ projects, queryPrams = null }) {
 
-  const { flash } = usePage().props
-
   const queryParams = queryPrams || {};
   const searchFieldChanged = (name, value) => {
     if (value) {
@@ -43,11 +41,6 @@ export default function Index({ projects, queryPrams = null }) {
   }
 
 
-  // const destoryProject = (id) => {
-  //   if (confirm('Are you sure you want to delete this project?')) {
-  //       route('project.destroy', id)
-  //   }
-  // }
 
 
   return (
@@ -64,9 +57,6 @@ export default function Index({ projects, queryPrams = null }) {
           <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
 
-              {flash.message && (
-                <div class="alert">{flash.message}</div>
-              )}
               <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
 
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -174,7 +164,13 @@ export default function Index({ projects, queryPrams = null }) {
                           style={{ width: 60 }}
                         />
                       </td>
-                      <td className="px-6 py-4">{project.name}</td>
+                      <th className="px-6 py-4">
+                        <Link
+                          href={route('project.show', project.id)}
+                          className="font-medium text-gray-100 hover:underline">
+                            {project.name}
+                          </Link>
+                        </th>
                       <td>
                         <span className={"px-3 py-2 rounded text-white " + PROJECT_STATUS_CLASS_MAP[project.status]}>
                           {PROJECT_STATUS_LABEL_MAP[project.status]}

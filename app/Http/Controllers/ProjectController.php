@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Http\Resources\ProjectResource;
+use App\Http\Resources\TaskResource;
 use App\Models\Project;
+use App\Models\Task;
 use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 
@@ -60,7 +62,26 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+
+        $query=$project->tasks();
+        $sort_field=request('sort_field', 'created_at');
+        $sort_direction=request('sort_direction', 'asc');
+
+        if(request('name')){
+            $query->where('name', 'like', '%' . request('name') . '%');
+        }
+
+        if(request('status')){
+            $query->where('status', 'like', '%' . request('status') . '%');
+        }
+
+        $tasks=$query->orderBy($sort_field,$sort_direction)->paginate(10)->onEachSide(1);
+
+        return Inertia::render('Project/Show', [
+            'project' => new ProjectResource($project),
+            'tasks'=>TaskResource::collection($tasks),
+            'queryPrams'=>request()->query()?:null
+        ]);
     }
 
     /**
