@@ -9,6 +9,8 @@ import TableHeader from "@/Components/TableHeader";
 
 export default function Index({ projects, queryPrams = null }) {
 
+  const { flash } = usePage().props
+
   const queryParams = queryPrams || {};
   const searchFieldChanged = (name, value) => {
     if (value) {
@@ -46,62 +48,70 @@ export default function Index({ projects, queryPrams = null }) {
   return (
     <AuthenticatedLayout
       header={
-        <h2 className="text-xl font-semibold leading-tight text-gray-800">
-          Project
-        </h2>
+        <div className="flex justify-between items-center">
+          <h2 className="text-xl font-semibold leading-tight text-gray-800">
+            Project
+          </h2>
+          <Link href={route('project.create')} className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600">Add New</Link>
+        </div>
       }
     >
       <Head title="Project" />
       <div className="py-12">
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
 
+            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+            {flash.success && (
+               <div className="bg-emerald-500 py-2 text-white rounded mb-4 px-3 h-15">
+                {flash.success}
+               </div>
+              )}
               <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
 
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
                     <TableHeader
-                    name='id'
-                    sort_field={queryParams.sort_field}
-                    sort_direction={queryParams.sort_direction}
-                    sortField={sortField}
+                      name='id'
+                      sort_field={queryParams.sort_field}
+                      sort_direction={queryParams.sort_direction}
+                      sortField={sortField}
                     >
                       ID
                     </TableHeader>
 
                     <th className="px-6 py-3 text-sm">IMAGE</th>
                     <TableHeader
-                    name='name'
-                    sort_field={queryParams.sort_field}
-                    sort_direction={queryParams.sort_direction}
-                    sortField={sortField}
+                      name='name'
+                      sort_field={queryParams.sort_field}
+                      sort_direction={queryParams.sort_direction}
+                      sortField={sortField}
                     >
                       NAME
                     </TableHeader>
 
                     <TableHeader
-                    name='status'
-                    sort_field={queryParams.sort_field}
-                    sort_direction={queryParams.sort_direction}
-                    sortField={sortField}
+                      name='status'
+                      sort_field={queryParams.sort_field}
+                      sort_direction={queryParams.sort_direction}
+                      sortField={sortField}
                     >
                       STATUS
                     </TableHeader>
                     <TableHeader
-                    name='created_at'
-                    sort_field={queryParams.sort_field}
-                    sort_direction={queryParams.sort_direction}
-                    sortField={sortField}
+                      name='created_at'
+                      sort_field={queryParams.sort_field}
+                      sort_direction={queryParams.sort_direction}
+                      sortField={sortField}
                     >
                       CREATED AT
                     </TableHeader>
 
-                   <TableHeader
-                    name='due_date'
-                    sort_field={queryParams.sort_field}
-                    sort_direction={queryParams.sort_direction}
-                    sortField={sortField}
+                    <TableHeader
+                      name='due_date'
+                      sort_field={queryParams.sort_field}
+                      sort_direction={queryParams.sort_direction}
+                      sortField={sortField}
                     >
                       DUE DATE
                     </TableHeader>
@@ -168,9 +178,9 @@ export default function Index({ projects, queryPrams = null }) {
                         <Link
                           href={route('project.show', project.id)}
                           className="font-medium text-gray-100 hover:underline">
-                            {project.name}
-                          </Link>
-                        </th>
+                          {project.name}
+                        </Link>
+                      </th>
                       <td>
                         <span className={"px-3 py-2 rounded text-white " + PROJECT_STATUS_CLASS_MAP[project.status]}>
                           {PROJECT_STATUS_LABEL_MAP[project.status]}
