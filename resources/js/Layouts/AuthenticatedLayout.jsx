@@ -13,9 +13,9 @@ export default function AuthenticatedLayout({ header, children }) {
 
     return (
         <div className="min-h-screen bg-gray-100">
-            <nav className="border-b border-gray-100 bg-white">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="flex h-16 justify-between">
+            <nav className="border-b  bg-emerald-500 ">
+                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ">
+                    <div className="flex h-16 justify-between ">
                         <div className="flex">
                             <div className="flex shrink-0 items-center">
                                 <Link href="/">
@@ -23,18 +23,20 @@ export default function AuthenticatedLayout({ header, children }) {
                                 </Link>
                             </div>
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex ">
 
-                                <NavLink
+                                {/* <NavLink
+                                className='text-white'
                                     href={route('dashboard')}
                                     active={route().current('dashboard')}
                                 >
                                     Dashboard
-                                </NavLink>
+                                </NavLink> */}
 
                                 <NavLink
                                     href={route('project.index')}
                                     active={route().current('project.index')}
+
                                 >
                                     Projects
                                 </NavLink>
@@ -151,14 +153,14 @@ export default function AuthenticatedLayout({ header, children }) {
                         ' sm:hidden'
                     }
                 >
-                    <div className="space-y-1 pb-3 pt-2">
+                    {/* <div className="space-y-1 pb-3 pt-2">
                         <ResponsiveNavLink
                             href={route('dashboard')}
                             active={route().current('dashboard')}
                         >
                             Dashboard
                         </ResponsiveNavLink>
-                    </div>
+                    </div> */}
 
                     <div className="border-t border-gray-200 pb-1 pt-4">
                         <div className="px-4">
@@ -187,7 +189,7 @@ export default function AuthenticatedLayout({ header, children }) {
             </nav>
 
             {header && (
-                <header className="bg-white shadow">
+                <header className="bg-gray-900 shadow">
                     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                         {header}
                     </div>

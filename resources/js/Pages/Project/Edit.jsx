@@ -8,20 +8,21 @@ import InputError from "@/Components/InputError";
 import TextAreaInput from "@/Components/TextAreaInput";
 
 
-export default function Create() {
+export default function Edit({ project }) {
 
   const { data, setData, post, processing, errors } = useForm({
-    name: '',
+    name: project.name || '',
     image: '',
-    description: '',
-    due_date: '',
-    status: '',
+    description: project.description || '',
+    due_date: project.due_date || '',
+    status: project.status || '',
+    _method: 'PUT',
   })
 
-  const createProjectSubmit = (e) => {
+  const updateProjectSubmit = (e) => {
     e.preventDefault()
-    post(route('project.store'))
-    //console.log(data)
+    post(route('project.update', project.id))
+    console.log(data)
   }
 
   return (
@@ -29,13 +30,13 @@ export default function Create() {
       header={
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-semibold leading-tight text-white">
-            Create New Project
+            Update Project
           </h2>
           <Link href={route('project.index')} className="bg-sky-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-sky-700">Back</Link>
         </div>
       }
     >
-      <Head title="Create Project" />
+      <Head title="Update Project" />
 
       <div className="py-12 bg-gray-900">
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -44,7 +45,7 @@ export default function Create() {
 
 
             <form
-              onSubmit={createProjectSubmit}
+              onSubmit={updateProjectSubmit}
               className="p-4 sm:p-8 bg-gray-600 dark:bg-gray-800 shadow sm:rounded-lg"
             >
 
@@ -117,7 +118,7 @@ export default function Create() {
                   type="date"
                   name="due_date"
                   isFocused={true}
-                  value={data.due_date}
+                  value={(data.due_date)}
                   onChange={(e) => setData('due_date', e.target.value)}
                   className="mt-1 block w-full"
                 />
@@ -137,6 +138,17 @@ export default function Create() {
                   onChange={(e) => setData('image', e.target.files[0])}
                   className="mt-1 block w-full text-white"
                 />
+
+                {project.image_path && (
+                  <div className="mt-2">
+                  <img
+                    src={project.image_path}
+                    alt="Project Image"
+                    className="w-64 h-64 object-cover rounded"
+                  />
+                  </div>
+                )}
+
                 <InputError message={errors.image_path} className="mt-2" />
               </div>
 
