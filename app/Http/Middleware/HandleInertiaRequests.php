@@ -33,11 +33,11 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'auth' => [
-                'user' => new UserResource($request->user()),
+                'user' => $request->user(),
             ],
             'flash' => [
                 'success' => fn () => $request->session()->get('success'),
-                'errors' => fn () => $request->session()->get('errors'),
+                'error' => fn () => $request->session()->get('error')
             ],
         ];
     }
