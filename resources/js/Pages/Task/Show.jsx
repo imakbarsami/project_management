@@ -23,7 +23,7 @@ export default function Show({task}) {
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="overflow-hidden dark:bg-gray-900 bg-white shadow-sm sm:rounded-lg">
             <div>
-              <img src={'http://127.0.0.1:8000/storage/'+task.image_path} alt=""
+              <img src={task.image_path} alt=""
                 className='w-full h-96 object-cover'
               />
             </div>

@@ -190,7 +190,7 @@ export default function TaskTable({ tasks, queryParams = null, hiddenProduct = f
                   {
                     task.image_path && (
                       <img
-                        src={'http://127.0.0.1:8000/storage/' + task.image_path}
+                        src={task.image_path}
                         style={{ width: 60 }}
                       />
                     )

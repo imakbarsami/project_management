@@ -224,6 +224,16 @@ export default function Edit({ task, users, projects }) {
                 <InputError message={errors.image_path} className="mt-2" />
               </div>
 
+              {task.image_path && (
+                  <div className="mt-2">
+                  <img
+                    src={task.image_path}
+                    alt="Project Image"
+                    className="w-64 h-64 object-cover rounded"
+                  />
+                  </div>
+                )}
+
               <div className="mt-4 text-right">
                 <Link href={route('task.index')} className="bg-gray-100 py-1 px-3 text-gray-800 rounded shadow transition-all hover:bg-gray-200 mr-2">Cancel</Link>
 
