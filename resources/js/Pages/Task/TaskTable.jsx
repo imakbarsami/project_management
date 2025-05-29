@@ -3,7 +3,7 @@ import SelectInput from "@/Components/SelectInput";
 import TableHeader from "@/Components/TableHeader";
 import TextInput from "@/Components/TextInput";
 import { TASK_STATUS_CLASS_MAP, TASK_STATUS_LABEL_MAP } from "@/Constant";
-import { Link, router } from "@inertiajs/react";
+import { Link, router, useForm } from "@inertiajs/react";
 
 export default function TaskTable({ tasks, queryParams = null, hiddenProduct = false }) {
 
@@ -37,6 +37,15 @@ export default function TaskTable({ tasks, queryParams = null, hiddenProduct = f
       queryParams.sort_direction = 'asc';
     }
     router.get(route('task.index'), queryParams)
+  }
+
+
+  const { processing, delete: destory } = useForm()
+
+  const destorytask = (id) => {
+    if (confirm('Are you sure you want to delete this task?')) {
+      destory(route('task.destroy', id))
+    }
   }
 
   return (
@@ -165,16 +174,28 @@ export default function TaskTable({ tasks, queryParams = null, hiddenProduct = f
 
                 {
                   !hiddenProduct && (
-                    <td className="px-6 py-4 text-nowrap">{task.project.name}</td>
+                    <th className="px-6 py-4 text-nowrap">
+                      <Link
+                      className="hover:underline hover:text-white"
+                      href={route('task.show',task.id)}
+                      >
+                        {task.project.name}
+                        </Link>
+                    </th>
                   )
                 }
 
 
                 <td className="px-6 py-4">
-                  <img
-                    src={task.image_path}
-                    style={{ width: 60 }}
-                  />
+                  {
+                    task.image_path && (
+                      <img
+                        src={'http://127.0.0.1:8000/storage/' + task.image_path}
+                        style={{ width: 60 }}
+                      />
+                    )
+                  }
+
                 </td>
                 <td className="px-6 py-4 text-nowrap">{task.name}</td>
                 <td>
@@ -195,7 +216,6 @@ export default function TaskTable({ tasks, queryParams = null, hiddenProduct = f
                   </a>
                   <Link
                     onClick={() => destorytask(task.id)}
-                    href={route('task.destroy', task.id)}
                     className="font-medium text-red-600 dark:text-red-500 hover:underline ml-2"
                   >
                     Delete
