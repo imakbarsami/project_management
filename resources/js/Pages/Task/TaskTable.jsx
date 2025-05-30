@@ -151,7 +151,10 @@ export default function TaskTable({ tasks, queryParams = null, hiddenProduct = f
                   <option value="">Select Status</option>
                   <option value="pending">Pending</option>
                   <option value="in_progress">In Progress</option>
-                  <option value="completed">Completed</option>
+                  {
+                    !myTask?<option value="completed">Completed</option>:" "
+                  }
+
                 </SelectInput>
               </th>
 
@@ -224,12 +227,17 @@ export default function TaskTable({ tasks, queryParams = null, hiddenProduct = f
                   >
                     Edit
                   </a>
-                  <Link
+                  {
+                    !myTask &&(
+                      <Link
                     onClick={() => destorytask(task.id)}
                     className="font-medium text-red-600 dark:text-red-500 hover:underline ml-2"
                   >
                     Delete
                   </Link>
+                    )
+                  }
+
                 </td>
               </tr>
             ))}

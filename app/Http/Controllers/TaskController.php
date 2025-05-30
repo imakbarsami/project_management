@@ -156,11 +156,45 @@ class TaskController extends Controller
             $my_tasks->where('status', 'like', '%' . request('status') . '%');
         }
 
-        $my_tasks=$my_tasks->orderBy($sort_field,$sort_direction)->paginate(10)->onEachSide(1);
+        $my_tasks=$my_tasks->orderBy($sort_field,$sort_direction)
+        ->whereIn('status',['in_progress','pending'])
+        ->paginate(10)
+        ->onEachSide(1);
+
+        $total_pending_tasks=Task::where('status','pending')->count();
+        $total_in_progress_tasks=Task::where('status','in_progress')->count();
+        $total_completed_tasks=Task::where('status','completed')->count();
+
+        $my_pending_tasks=Task::where([
+            ['status','pending'],
+            ['assigned_user_id',$id]
+            ])->count();
+
+        $my_in_progress_tasks=Task::where([
+                ['status','in_progress'],
+                ['assigned_user_id',$id]
+                ])->count();
+
+        $my_completed_tasks=Task::where([
+                ['status','completed'],
+                ['assigned_user_id',$id]
+                ])->count();
+
+        $my_status=[
+            'total_pending_tasks'=>$total_pending_tasks,
+            'total_in_progress_tasks'=>$total_in_progress_tasks,
+            'total_completed_tasks'=>$total_completed_tasks,
+            'my_pending_tasks'=>$my_pending_tasks,
+            'my_in_progress_tasks'=>$my_in_progress_tasks,
+            'my_completed_tasks'=>$my_completed_tasks,
+        ];
+
+        //dd($my_status);
 
         return Inertia::render('Task/MyTask', [
             'tasks' => TaskResource::collection($my_tasks),
-            'queryPrams' => request()->query() ?: null
+            'queryPrams' => request()->query() ?: null,
+             'mystatus'=>$my_status,
         ]);
     }
 
