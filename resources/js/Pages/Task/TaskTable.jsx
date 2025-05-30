@@ -5,7 +5,7 @@ import TextInput from "@/Components/TextInput";
 import { TASK_STATUS_CLASS_MAP, TASK_STATUS_LABEL_MAP } from "@/Constant";
 import { Link, router, useForm } from "@inertiajs/react";
 
-export default function TaskTable({ tasks, queryParams = null, hiddenProduct = false }) {
+export default function TaskTable({ tasks, queryParams = null, hiddenProduct = false, myTask = false, user }) {
 
 
   //const queryParams = queryPrams || {};
@@ -16,7 +16,8 @@ export default function TaskTable({ tasks, queryParams = null, hiddenProduct = f
       delete queryParams[name];
     }
 
-    router.get(route('task.index'), queryParams)
+    myTask ? router.get(route('mytask.index',user.id), queryParams) : router.get(route('task.index'), queryParams)
+   // router.get(route('task.index'), queryParams)
   }
 
   const onKeyPress = (name, e) => {
@@ -36,7 +37,8 @@ export default function TaskTable({ tasks, queryParams = null, hiddenProduct = f
       queryParams.sort_field = name;
       queryParams.sort_direction = 'asc';
     }
-    router.get(route('task.index'), queryParams)
+    myTask ? router.get(route('mytask.index',user.id), queryParams) : router.get(route('task.index'), queryParams)
+    //router.get(route('task.index'), queryParams)
   }
 
 
@@ -44,7 +46,8 @@ export default function TaskTable({ tasks, queryParams = null, hiddenProduct = f
 
   const destorytask = (id) => {
     if (confirm('Are you sure you want to delete this task?')) {
-      destory(route('task.destroy', id))
+      router.delete(route('task.destroy', id))
+
     }
   }
 
@@ -175,9 +178,9 @@ export default function TaskTable({ tasks, queryParams = null, hiddenProduct = f
                 {
                   !hiddenProduct && (
                     <th className="px-6 py-4 text-nowrap">
-                      <Link
+                     <Link
                       className="hover:underline hover:text-white"
-                      href={route('task.show',task.id)}
+                      href={route('project.show',task.project.id)}
                       >
                         {task.project.name}
                         </Link>
@@ -197,7 +200,14 @@ export default function TaskTable({ tasks, queryParams = null, hiddenProduct = f
                   }
 
                 </td>
-                <td className="px-6 py-4 text-nowrap">{task.name}</td>
+                <th className="px-6 py-4 text-nowrap">
+                  <Link
+                    className="hover:underline hover:text-white"
+                    href={route('task.show', task.id)}
+                  >
+                    {task.name}
+                  </Link>
+                </th>
                 <td>
                   <span className={"px-3 py-2 rounded text-white " + TASK_STATUS_CLASS_MAP[task.status]}>
                     {TASK_STATUS_LABEL_MAP[task.status]}

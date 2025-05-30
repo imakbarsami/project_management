@@ -1,6 +1,6 @@
 import { Head, Link } from '@inertiajs/react';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { TASK_STATUS_CLASS_MAP, TASK_STATUS_LABEL_MAP } from '@/Constant';
+import { TASK_PRIORITY_CLASS_MAP, TASK_PRIORITY_LABEL_MAP, TASK_STATUS_CLASS_MAP, TASK_STATUS_LABEL_MAP } from '@/Constant';
 
 
 export default function Show({task}) {
@@ -48,8 +48,12 @@ export default function Show({task}) {
                     </p>
                   </div>
                   <div className='mt-4'>
-                    <label className='font-bold text-lg'>Priority </label>
-                    <p>{task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}</p>
+                  <label className='font-bold text-lg'>Task Priority </label>
+                  <p className='mt-2'>
+                      <span className={"px-2 py-1 rounded text-white " + TASK_PRIORITY_CLASS_MAP[task.priority]}>
+                        {TASK_PRIORITY_LABEL_MAP[task.priority]}
+                      </span>
+                    </p>
 
                   </div>
                   <div className='mt-4'>
