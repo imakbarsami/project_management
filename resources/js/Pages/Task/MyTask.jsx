@@ -32,13 +32,13 @@ export default function MyTask({ tasks, queryPrams = null,mystatus }) {
         <div className="border m-8 overflow-auto shadow">
           <div className=" m-8 overflow-auto shadow bg-[#111827] p-4 flex justify-between rounded text-white">
             {/* Pending Tasks */}
-            <div className="flex-1 text-center border-r border-gray-700 px-4">
+            <div className="flex-1 text-center border-r border-emerald-400 px-4">
               <h2 className="text-orange-400 font-bold text-lg">Pending Tasks</h2>
               <p className="text-lg">{!mystatus.my_pending_tasks==0?mystatus.my_pending_tasks:0} / {mystatus.total_pending_tasks} </p>
             </div>
 
             {/* In Progress Tasks */}
-            <div className="flex-1 text-center border-r border-gray-700 px-4">
+            <div className="flex-1 text-center border-r border-emerald-400 px-4">
               <h2 className="text-blue-400 font-bold text-lg">In Progress Tasks</h2>
               <p className="text-lg">{!mystatus.my_in_progress_tasks==0?mystatus.my_in_progress_tasks:0} / {mystatus.total_in_progress_tasks} </p>
             </div>
