@@ -43,10 +43,10 @@ export default function Index({ projects, queryPrams = null }) {
   }
 
 
-  const {processing,delete:destroy}=useForm()
+  const { processing, delete: destroy } = useForm()
 
-  const destoryProject=(id)=>{
-    if(confirm("Are you sure you want to delete this project?")) {
+  const destoryProject = (id) => {
+    if (confirm("Are you sure you want to delete this project?")) {
       destroy(route('project.destroy', id))
     }
   }
@@ -68,17 +68,20 @@ export default function Index({ projects, queryPrams = null }) {
       <div className="py-12 bg-gray-900">
         <div className="border m-8 overflow-auto shadow">
 
-            {flash.errors && (
-               <div className="bg-red-500 py-2 text-black rounded mb-4 px-3 h-15">
-                {flash.errors}
-               </div>
-              )}
+          {flash.errors && (
+            <div className="bg-red-500 py-2 text-black rounded mb-4 px-3 h-15">
+              {flash.errors}
+            </div>
+          )}
 
-            {flash.success && (
-               <div className="bg-emerald-500 py-2 text-black text-2xl rounded mb-4 px-3 h-15">
-                {flash.success}
-               </div>
-              )}
+          {flash.success && (
+            <div className="bg-emerald-500 py-2 text-black text-2xl rounded mb-4 px-3 h-15">
+              {flash.success}
+            </div>
+          )}
+
+          {
+            projects.data.length > 0 && (
               <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
 
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -221,12 +224,25 @@ export default function Index({ projects, queryPrams = null }) {
                   ))}
                 </tbody>
               </table>
-            </div>
 
-            <Pagination links={projects.meta.links} />
+            )}
 
+          {
+            projects.data.length == 0 && (
 
+              <p className="font-bold text-center text-4xl text-cyan-100 py-5">No Data</p>
+            )}
         </div>
+
+        {
+          projects.data.length > 0 && (
+            <Pagination links={projects.meta.links} />
+          )
+        }
+
+
+
+      </div>
 
     </AuthenticatedLayout>
   );

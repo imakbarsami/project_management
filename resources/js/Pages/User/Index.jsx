@@ -82,114 +82,133 @@ export default function Index({ users, queryPrams = null }) {
               {flash.success}
             </div>
           )}
-          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
 
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <TableHeader
-                  name='id'
-                  sort_field={queryParams.sort_field}
-                  sort_direction={queryParams.sort_direction}
-                  sortField={sortField}
-                >
-                  ID
-                </TableHeader>
+          {
+            users.data.length > 0 && (
 
+              <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
 
-                <TableHeader
-                  name='name'
-                  sort_field={queryParams.sort_field}
-                  sort_direction={queryParams.sort_direction}
-                  sortField={sortField}
-                >
-                  NAME
-                </TableHeader>
-
-                <TableHeader
-                  name='email'
-                  sort_field={queryParams.sort_field}
-                  sort_direction={queryParams.sort_direction}
-                  sortField={sortField}
-                >
-                  EMAIL
-                </TableHeader>
-
-
-
-
-                <th className="px-6 py-3 text-sm">ACTIONS</th>
-              </tr>
-            </thead>
-
-
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th className="px-6 py-3"></th>
-
-
-                <th className="px-6 py-3">
-                  <TextInput className='w-22'
-                    defaultValue={queryParams.search_user}
-                    placeholder="Serach User"
-                    onBlur={e => searchFieldChanged('search_user', e.target.value)}
-                    onKeyPress={e => onKeyPress('search_user', e)}
-                  />
-                </th>
-
-                <th className="px-6 py-3"></th>
-
-                <th className="px-6 py-3"></th>
-              </tr>
-            </thead>
-            <tbody>
-
-              {users.data.map((user) => (
-                <tr
-                  key={user.id}
-                  className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200"
-                >
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                  >
-                    {user.id}
-                  </th>
-
-
-                  <th className="px-6 py-4">
-                    <Link
-                      href={route('user.show', user.id)}
-                      className="font-medium text-gray-100 hover:underline">
-                      {user.name}
-                    </Link>
-                  </th>
-
-                  <td className="px-6 py-4 text-nowrap">{user.email}</td>
-
-
-
-                  <td className="px-6 py-4">
-                    <a
-                      href={route('user.edit', user.id)}
-                      className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  <tr>
+                    <TableHeader
+                      name='id'
+                      sort_field={queryParams.sort_field}
+                      sort_direction={queryParams.sort_direction}
+                      sortField={sortField}
                     >
-                      Edit
-                    </a>
-                    <Link
-                      onClick={() => destoryUser(user.id)}
-                      disabled={processing}
-                      className="font-medium text-red-600 dark:text-red-500 hover:underline ml-2"
+                      ID
+                    </TableHeader>
+
+
+                    <TableHeader
+                      name='name'
+                      sort_field={queryParams.sort_field}
+                      sort_direction={queryParams.sort_direction}
+                      sortField={sortField}
                     >
-                      Delete
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                      NAME
+                    </TableHeader>
+
+                    <TableHeader
+                      name='email'
+                      sort_field={queryParams.sort_field}
+                      sort_direction={queryParams.sort_direction}
+                      sortField={sortField}
+                    >
+                      EMAIL
+                    </TableHeader>
+
+
+                    <tr/>
+
+                    {/* <th className="px-6 py-3 text-sm">ACTIONS</th> */}
+                  </tr>
+                </thead>
+
+
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  <tr>
+                    <th className="px-6 py-3"></th>
+
+
+                    <th className="px-6 py-3">
+                      <TextInput className='w-22'
+                        defaultValue={queryParams.search_user}
+                        placeholder="Serach User"
+                        onBlur={e => searchFieldChanged('search_user', e.target.value)}
+                        onKeyPress={e => onKeyPress('search_user', e)}
+                      />
+                    </th>
+
+                    <th className="px-6 py-3"></th>
+
+                    <th className="px-6 py-3"></th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  {users.data.map((user) => (
+                    <tr
+                      key={user.id}
+                      className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200"
+                    >
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                        {user.id}
+                      </th>
+
+
+                      <th className="px-6 py-4">
+                        <Link
+                          href={route('user.show', user.id)}
+                          className="font-medium text-gray-100 hover:underline">
+                          {user.name}
+                        </Link>
+                      </th>
+
+                      <td className="px-6 py-4 text-nowrap hover:underline hover:text-white">{user.email}</td>
+
+                     <tr/>
+
+                      {/* <td className="px-6 py-4">
+                        <a
+                          href={route('user.edit', user.id)}
+                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                        >
+                          Edit
+                        </a>
+                        <Link
+                          onClick={() => destoryUser(user.id)}
+                          disabled={processing}
+                          className="font-medium text-red-600 dark:text-red-500 hover:underline ml-2"
+                        >
+                          Delete
+                        </Link>
+                      </td> */}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+
+
+            {
+              users.data.length == 0 && (
+                 <p className="font-bold text-center text-4xl text-cyan-100 py-5">No Data</p>
+              )
+            }
         </div>
 
-        <Pagination links={users.meta.links} />
+
+        {
+          users.data.length > 0 && (
+            <Pagination links={users.meta.links} />
+          )
+        }
+
+
 
 
       </div>

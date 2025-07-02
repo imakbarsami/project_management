@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
@@ -18,6 +19,9 @@ Route::middleware(['auth','verified'])->group(function(){
     Route::resource('task',TaskController::class);
     Route::resource('user',UserController::class);
     Route::get('my_task/{task}', [TaskController::class, 'myTask'])->name('mytask.index');
+    Route::post('comment/{task}', [CommentController::class, 'store'])->name('comment.store');
+    Route::delete('comment/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy');
+    
 });
 
 Route::middleware('auth')->group(function () {

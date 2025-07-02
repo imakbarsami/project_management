@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Http\Resources\CommentResouce;
 use App\Http\Resources\ProjectResource;
 use App\Http\Resources\TaskResource;
 use App\Http\Resources\UserResource;
+use App\Models\Comment;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
@@ -86,9 +89,12 @@ class TaskController extends Controller
     public function show(Task $task)
     {
         $task = $task->with('project', 'assignedUser', 'createdBy', 'updatedBy')->find($task->id);
+        $comments=Comment::where('task_id',$task->id)->with('user')->get();
         //dd($task);
+        //dd($comments);
         return Inertia::render('Task/Show', [
             'task' => new TaskResource($task),
+            'comments' =>CommentResouce::collection($comments)
         ]);
     }
 
@@ -157,7 +163,7 @@ class TaskController extends Controller
         }
 
         $my_tasks=$my_tasks->orderBy($sort_field,$sort_direction)
-        ->whereIn('status',['in_progress','pending'])
+        ->whereIn('status',['in_progress','pending','completed'])
         ->paginate(10)
         ->onEachSide(1);
 
