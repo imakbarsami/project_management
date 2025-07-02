@@ -143,7 +143,7 @@ Completed Tasks:      6 / 6
 <h2>🛠️ Setup Instructions</h2>
 
 <h3>1. Clone the Repository</h3>
-<pre><code>git clone https://github.com/imakbarsami/CodeAlpha_ProjectManagement.git
+<pre><code>git clone https://github.com/imakbarsami/project_management.git
 cd CodeAlpha_ProjectManagement
 </code></pre>
 
